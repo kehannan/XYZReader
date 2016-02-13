@@ -620,6 +620,7 @@ int id action_up 0x7f0d006b
 int id activity_chooser_view_content 0x7f0d003d
 int id alertTitle 0x7f0d0049
 int id always 0x7f0d0032
+int id app_bar_layout 0x7f0d006c
 int id article_body 0x7f0d007e
 int id article_byline 0x7f0d007d
 int id article_subtitle 0x7f0d0081
@@ -636,6 +637,7 @@ int id chronometer 0x7f0d0089
 int id clip_horizontal 0x7f0d002b
 int id clip_vertical 0x7f0d002c
 int id collapseActionView 0x7f0d0033
+int id collapsing_toolbar_layout 0x7f0d006d
 int id contentPanel 0x7f0d004a
 int id custom 0x7f0d0050
 int id customPanel 0x7f0d004f
@@ -689,7 +691,7 @@ int id pin 0x7f0d001b
 int id progress_circular 0x7f0d0006
 int id progress_horizontal 0x7f0d0007
 int id radio 0x7f0d0054
-int id recycler_view 0x7f0d006d
+int id recycler_view 0x7f0d006f
 int id refresh 0x7f0d008f
 int id right 0x7f0d0023
 int id screen 0x7f0d0027
@@ -726,7 +728,6 @@ int id src_over 0x7f0d002a
 int id start 0x7f0d0024
 int id status_bar_latest_event_content 0x7f0d0084
 int id submit_area 0x7f0d0065
-int id swipe_refresh_layout 0x7f0d006c
 int id tabMode 0x7f0d000d
 int id text 0x7f0d008c
 int id text2 0x7f0d008a
@@ -735,8 +736,7 @@ int id thumbnail 0x7f0d0080
 int id time 0x7f0d0088
 int id title 0x7f0d0043
 int id title_template 0x7f0d0048
-int id toolbar 0x7f0d006f
-int id toolbar_container 0x7f0d006e
+int id toolbar 0x7f0d006e
 int id top 0x7f0d0025
 int id topPanel 0x7f0d0047
 int id up 0x7f0d0009

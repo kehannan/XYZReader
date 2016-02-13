@@ -2367,6 +2367,7 @@ containing a value of this type.
         public static final int activity_chooser_view_content=0x7f0d003d;
         public static final int alertTitle=0x7f0d0049;
         public static final int always=0x7f0d0032;
+        public static final int app_bar_layout=0x7f0d006c;
         public static final int article_body=0x7f0d007e;
         public static final int article_byline=0x7f0d007d;
         public static final int article_subtitle=0x7f0d0081;
@@ -2383,6 +2384,7 @@ containing a value of this type.
         public static final int clip_horizontal=0x7f0d002b;
         public static final int clip_vertical=0x7f0d002c;
         public static final int collapseActionView=0x7f0d0033;
+        public static final int collapsing_toolbar_layout=0x7f0d006d;
         public static final int contentPanel=0x7f0d004a;
         public static final int custom=0x7f0d0050;
         public static final int customPanel=0x7f0d004f;
@@ -2436,7 +2438,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f0d0006;
         public static final int progress_horizontal=0x7f0d0007;
         public static final int radio=0x7f0d0054;
-        public static final int recycler_view=0x7f0d006d;
+        public static final int recycler_view=0x7f0d006f;
         public static final int refresh=0x7f0d008f;
         public static final int right=0x7f0d0023;
         public static final int screen=0x7f0d0027;
@@ -2473,7 +2475,6 @@ containing a value of this type.
         public static final int start=0x7f0d0024;
         public static final int status_bar_latest_event_content=0x7f0d0084;
         public static final int submit_area=0x7f0d0065;
-        public static final int swipe_refresh_layout=0x7f0d006c;
         public static final int tabMode=0x7f0d000d;
         public static final int text=0x7f0d008c;
         public static final int text2=0x7f0d008a;
@@ -2482,8 +2483,7 @@ containing a value of this type.
         public static final int time=0x7f0d0088;
         public static final int title=0x7f0d0043;
         public static final int title_template=0x7f0d0048;
-        public static final int toolbar=0x7f0d006f;
-        public static final int toolbar_container=0x7f0d006e;
+        public static final int toolbar=0x7f0d006e;
         public static final int top=0x7f0d0025;
         public static final int topPanel=0x7f0d0047;
         public static final int up=0x7f0d0009;
