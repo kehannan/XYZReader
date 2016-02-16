@@ -398,6 +398,7 @@
         <item name="colorPrimary">@color/orange_500</item>
         <item name="colorPrimaryDark">@color/orange_700</item>
         <item name="colorAccent">@color/blue_a200</item>
+
     </style>
     <!-- From: file:/Users/khannan/AndroidStudioProjects/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
@@ -1347,6 +1348,12 @@
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+    <!-- From: file:/Users/khannan/AndroidStudioProjects/XYZReader/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="BodyFont" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
     <!-- From: file:/Users/khannan/AndroidStudioProjects/XYZReader/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>

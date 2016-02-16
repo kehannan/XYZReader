@@ -21,16 +21,12 @@
         <item name="colorPrimary">@color/orange_500</item>
         <item name="colorPrimaryDark">@color/orange_700</item>
         <item name="colorAccent">@color/blue_a200</item>
-    </style>
-    <!--
-    <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
 
     </style>
 
-    <style name="Theme.Bacon.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="BodyFont" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
-
--->
 
 </resources>
