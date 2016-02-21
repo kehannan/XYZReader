@@ -17,6 +17,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import android.support.v4.content.Loader;
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String TAG = "ArticleListActivity";
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -138,8 +140,18 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    Log.v(TAG, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())).toString());
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+
+
+
+                    // "content://com.example.xyzreader/items/*position*
+
+//                    Intent i = new Intent(getActivity(), ArticleDetailActivity.class);
+//                    i.putExtra(SummaryFragment.MOVIE_KEY, movie);
+//                    startActivity(i);
                 }
             });
             return vh;

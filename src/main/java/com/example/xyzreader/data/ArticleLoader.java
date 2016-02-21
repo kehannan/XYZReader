@@ -10,6 +10,8 @@ import android.support.v4.content.CursorLoader;
 public class ArticleLoader extends CursorLoader {
     public static ArticleLoader newAllArticlesInstance(Context context) {
         return new ArticleLoader(context, ItemsContract.Items.buildDirUri());
+
+        // URI = content://com.example.xyzreader/items
     }
 
     public static ArticleLoader newInstanceForItemId(Context context, long itemId) {
