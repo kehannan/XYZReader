@@ -1,6 +1,9 @@
 package com.example.xyzreader.ui;
 
 
+import android.graphics.BitmapFactory;
+import android.support.v7.graphics.Palette;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.content.Intent;
@@ -16,7 +19,6 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -26,14 +28,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.squareup.picasso.Picasso;
 
 import android.support.v4.content.Loader;
+
+import java.io.InputStream;
+import java.util.HashMap;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -45,7 +52,6 @@ public class ArticleDetailFragment extends Fragment implements
     private static final String TAG = "ArticleDetailFragment";
 
     public static final String ARG_ITEM_ID = "item_id";
-
 
     private Cursor mCursor;
     private long mItemId;
@@ -102,21 +108,20 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
         toolbarLayout = (CollapsingToolbarLayout) mRootView
                 .findViewById(R.id.collapsing_toolbar_layout);
 
-
-
+        // Implementing up arrow on details page
         Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        ActionBar mActionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
-
+        mActionBar.setDisplayShowTitleEnabled(false);
 
 
 //        mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
@@ -176,6 +181,7 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 
+        final LinearLayout articleBar = (LinearLayout) mRootView.findViewById(R.id.article_bar);
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
@@ -204,31 +210,37 @@ public class ArticleDetailFragment extends Fragment implements
 
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
 
+            Log.v(TAG, "photo URL " + mCursor.getString(ArticleLoader.Query.PHOTO_URL));
 
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                //Palette p = Palette.generate(bitmap, 12);
-                                //mMutedColor = p.getDarkMutedColor(0xFF333333);
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                //mRootView.findViewById(R.id.meta_bar)
-                                //        .setBackgroundColor(mMutedColor);
-                                //updateStatusBar();
-                            }
-                        }
+            Picasso.with(getActivity()).load(
+                    mCursor.getString(ArticleLoader.Query.PHOTO_URL)).into(mPhotoView);
 
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
 
-                        }
-                    });
+//            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
+//                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
+//                        @Override
+//                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+//                            Bitmap bitmap = imageContainer.getBitmap();
+//                            if (bitmap != null) {
+//                                //Palette p = Palette.generate(bitmap, 12);
+//                                //mMutedColor = p.getDarkMutedColor(0xFF333333);
+//                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
+//                                articleBar.setBackgroundColor(getImageColor(imageContainer.getBitmap()));
+//                                //mRootView.findViewById(R.id.meta_bar)
+//                                //        .setBackgroundColor(mMutedColor);
+//                                //updateStatusBar();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onErrorResponse(VolleyError volleyError) {
+//
+//                        }
+//                    });
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
@@ -273,4 +285,30 @@ public class ArticleDetailFragment extends Fragment implements
 //                ? (int) mPhotoContainerView.getTranslationY() + mPhotoView.getHeight() - mScrollY
 //                : mPhotoView.getHeight() - mScrollY;
 //    }
+
+    public int getImageColor(Bitmap bitmap) {
+
+        int imageColor = Color.RED;
+        Log.v (TAG, "in start " + imageColor);
+
+        // Do this async on activity
+        try {
+
+            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                @Override
+                public void onGenerated(Palette palette) {
+                    int imageColor = palette.getDarkVibrantColor(Color.RED);
+                    Log.v(TAG, "in onGenerated " + imageColor);
+                }
+            });
+
+            Log.v(TAG, "in try " + imageColor);
+            return imageColor;
+
+        } catch (Exception ex) {
+            Log.e("MainActivity", "error in creating palette");
+        } finally {
+            return imageColor;
+        }
+    }
 }
