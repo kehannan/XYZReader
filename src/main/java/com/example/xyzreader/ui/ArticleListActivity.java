@@ -51,11 +51,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle("XYZ Reader");
 
-//        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-//        final View toolbarContainerView = findViewById(R.id.toolbar_container);
-
-//        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -140,6 +135,8 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    Log.v(TAG, "clicked");
 
                     Log.v(TAG, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())).toString());
                     startActivity(new Intent(Intent.ACTION_VIEW,

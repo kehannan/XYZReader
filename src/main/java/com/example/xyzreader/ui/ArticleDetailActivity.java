@@ -136,11 +136,6 @@ public class ArticleDetailActivity extends AppCompatActivity
        mCursor = cursor;
        mPagerAdapter.notifyDataSetChanged();
 
-//        Log.v(TAG, "onLoadFinished(). cursor position " + mCursor.getLong(ArticleLoader.Query._ID));
-//        Log.v(TAG, "onLoadFinished(). mStartId " + mStartId);
-
-
-
         // Select the start ID
         if (mStartId > 0) {
             mCursor.moveToFirst();
@@ -197,11 +192,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         public Fragment getItem(int position) {
 
             mCursor.moveToPosition(position);
-
-            Log.v(TAG, "mCursor position " + mCursor.getPosition());
-            Log.v(TAG, "position " + position);
-            Log.v(TAG, "Query._ID " + ArticleLoader.Query._ID);
-            Log.v(TAG, String.valueOf(mCursor.getLong(ArticleLoader.Query._ID)));
 
             return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
         }
