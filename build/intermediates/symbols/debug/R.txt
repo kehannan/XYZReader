@@ -841,9 +841,10 @@ int string action_share 0x7f060016
 int string app_name 0x7f060017
 int string appbar_scrolling_view_behavior 0x7f060018
 int string character_counter_pattern 0x7f060019
+int string network_unavailable 0x7f06001a
 int string status_bar_notification_info_overflow 0x7f060013
-int string up 0x7f06001a
-int string welcome_xyz_reader 0x7f06001b
+int string up 0x7f06001b
+int string welcome_xyz_reader 0x7f06001c
 int style AlertDialog_AppCompat 0x7f09007e
 int style AlertDialog_AppCompat_Light 0x7f09007f
 int style Animation_AppCompat_Dialog 0x7f090080

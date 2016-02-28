@@ -1,10 +1,7 @@
 package com.example.xyzreader.ui;
 
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -66,13 +63,16 @@ public class ArticleListActivity extends AppCompatActivity implements
 
             getSupportLoaderManager().initLoader(0, null, this);
 
-        } else {
-            Snackbar snackbar = Snackbar.make(
-                    coordinatorLayout, "Offline", Snackbar.LENGTH_LONG);
-        }
+            if (savedInstanceState == null) {
+                refresh();
+            }
 
-        if (savedInstanceState == null) {
-            refresh();
+        } else {
+            Log.v(TAG, "network un-available");
+
+            Snackbar snackbar = Snackbar.make(
+                    coordinatorLayout, R.string.network_unavailable, Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
     }
 
@@ -83,31 +83,12 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(mRefreshingReceiver,
-                new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(mRefreshingReceiver);
-    }
-
-    private boolean mIsRefreshing = false;
-
-    private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
-                mIsRefreshing = intent.getBooleanExtra(UpdaterService.EXTRA_REFRESHING, false);
-                updateRefreshingUI();
-            }
-        }
-    };
-
-    private void updateRefreshingUI() {
-       // mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
-    }
+   }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -156,14 +137,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                     Log.v(TAG, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())).toString());
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
-
-
-
-                    // "content://com.example.xyzreader/items/*position*
-
-//                    Intent i = new Intent(getActivity(), ArticleDetailActivity.class);
-//                    i.putExtra(SummaryFragment.MOVIE_KEY, movie);
-//                    startActivity(i);
                 }
             });
             return vh;
@@ -209,6 +182,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     // Code based on: http://stackoverflow.com/questions/4238921/
     // detect-whether-there-is-an-internet-connection-available-on-android
     private boolean isNetworkAvailable() {
+
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

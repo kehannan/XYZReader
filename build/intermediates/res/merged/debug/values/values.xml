@@ -403,6 +403,9 @@
     <eat-comment/>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
+    <!-- From: file:/Users/khannan/AndroidStudioProjects/XYZReader/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="network_unavailable">The network is unavailable. Please connect and try again.</string>
     <!-- From: file:/Users/khannan/AndroidStudioProjects/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>

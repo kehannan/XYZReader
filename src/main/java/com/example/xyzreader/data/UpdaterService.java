@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.support.design.widget.Snackbar;
 import android.text.format.Time;
 import android.util.Log;
 import com.example.xyzreader.remote.Article;
@@ -42,9 +41,6 @@ public class UpdaterService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         final Time time = new Time();
-
-        sendStickyBroadcast(
-                new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, true));
 
         final ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
 
