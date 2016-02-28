@@ -1,10 +1,10 @@
 package com.example.xyzreader.ui;
 
-
-
-import android.graphics.Color;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v4.app.Fragment;
@@ -25,12 +25,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-
 import android.support.v4.content.Loader;
 
 
@@ -49,18 +47,11 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
     private ImageView mPhotoView;
-    private int mScrollY;
-    private boolean mIsCard = false;
-    private int mStatusBarFullOpacityBottom;
     CollapsingToolbarLayout toolbarLayout;
     LinearLayout articleBar;
     TextView titleView;
     TextView bylineView;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ArticleDetailFragment() {
     }
 
@@ -80,14 +71,7 @@ public class ArticleDetailFragment extends Fragment implements
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
 
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
-//        mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
-//                R.dimen.detail_card_top_margin);
         setHasOptionsMenu(true);
-    }
-
-    public ArticleDetailActivity getActivityCast() {
-        return (ArticleDetailActivity) getActivity();
     }
 
     @Override
@@ -110,13 +94,25 @@ public class ArticleDetailFragment extends Fragment implements
         toolbarLayout = (CollapsingToolbarLayout) mRootView
                 .findViewById(R.id.collapsing_toolbar_layout);
 
-        // Implementing up arrow on details page
+        // Implementing up arrow
         Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setDisplayShowTitleEnabled(false);
+
+        FloatingActionButton mFab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setText("Some sample text")
+                        .getIntent(), getString(R.string.action_share)));
+            }
+        });
 
         return mRootView;
     }
@@ -133,17 +129,9 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
 
-        //bylineView.setMovementMethod(new LinkMovementMethod());
-
-        //bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
-
         if (mCursor != null) {
 
-            Log.v(TAG, "cursor rows" + mCursor.getCount());
-
-
             mRootView.setVisibility(View.VISIBLE);
-
 
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
 
@@ -154,11 +142,12 @@ public class ArticleDetailFragment extends Fragment implements
                             DateUtils.FORMAT_ABBREV_ALL).toString()                 // 524288
                             + " by "
                             + mCursor.getString(ArticleLoader.Query.AUTHOR)));
-                            //+ "</font>"));
 
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
 
-
+            // Load image with Picasso library. Use custom Target object
+            // to set the photo view and colors of the views based on
+            // the Palette of the photo
             Picasso.with(getActivity())
                     .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
                    // .into(mPhotoView);
@@ -172,17 +161,18 @@ public class ArticleDetailFragment extends Fragment implements
         }
     }
 
+    // Custom Target used by Picasso to set Image and
+    // set background/view colors
     private Target myTarget = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            // loading of the bitmap was a success
+
             mPhotoView.setImageBitmap(bitmap);
             setColors(bitmap);
         }
 
         @Override
         public void onBitmapFailed(Drawable errorDrawable) {
-            // loading of the bitmap failed
             Log.v(TAG, "Bitmap failed");
         }
 
@@ -190,7 +180,6 @@ public class ArticleDetailFragment extends Fragment implements
         public void onPrepareLoad(Drawable placeHolderDrawable) {
         }
     };
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -222,29 +211,17 @@ public class ArticleDetailFragment extends Fragment implements
         bindViews();
     }
 
+    // Sets color of views based on Palette on the image.
+    // Takes the image (bitmap) as input
     public void setColors(Bitmap bitmap) {
 
-        // Do this async on activity
         try {
-
             Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+
+                // Use the first theme that is non-null and set the colors
+                // of the article bar.
                 @Override
                 public void onGenerated(Palette palette) {
-
-                    //set image color
-//                    int imageColor = palette.getDarkVibrantColor(Color.TRANSPARENT);
-//
-//                    if (imageColor != Color.TRANSPARENT) {
-//                        articleBar.setBackgroundColor(imageColor);
-//                    } else {
-//                        imageColor = palette.getLightVibrantColor(Color.TRANSPARENT);
-//                    }
-//                    Log.v(TAG, "in onGenerated " + imageColor);
-//                    articleBar.setBackgroundColor(imageColor);
-//                    int textColor = palette.getLightVibrantColor(Color.DKGRAY);
-//                    titleView.setTextColor(textColor);
-//                    bylineView.setTextColor(textColor);
-
 
                     if (palette.getDarkVibrantSwatch() !=null) {
                         setContentColors(palette.getDarkVibrantSwatch());
@@ -263,15 +240,16 @@ public class ArticleDetailFragment extends Fragment implements
 
                     } else if (palette.getMutedSwatch() != null) {
                         setContentColors(palette.getMutedSwatch());
-
                     }
                 }
             });
         } catch (Exception ex) {
-            Log.e("MainActivity", "error in creating palette");
+            Log.e(TAG, "error in creating palette");
         }
     }
 
+        // Set the colors of the views in the article bar based on the
+        // supplied swatch. Also sets the up arrow color.
         private void setContentColors(Palette.Swatch swatch) {
             articleBar.setBackgroundColor(swatch.getRgb());
             titleView.setTextColor(swatch.getTitleTextColor());
