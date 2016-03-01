@@ -61,6 +61,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         collapsingToolbar.setTitle("XYZ Reader");
 
+        // approach from Stack Overflow:
+        // http://stackoverflow.com/questions/31738831/how-to-change-collapsingtoolbarlayout-typeface-and-size
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
 
