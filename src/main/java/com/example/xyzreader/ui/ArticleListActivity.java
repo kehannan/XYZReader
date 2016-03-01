@@ -3,6 +3,7 @@ package com.example.xyzreader.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -55,7 +56,13 @@ public class ArticleListActivity extends AppCompatActivity implements
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                 .coordinator_layout);
 
-        ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle("XYZ Reader");
+        CollapsingToolbarLayout collapsingToolbar =
+        (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+
+        collapsingToolbar.setTitle("XYZ Reader");
+
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -160,7 +167,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
             Picasso.with(mContext)
                 .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
-                .resize(200, 200)
+                    .resize(200, 200)
                 .centerCrop()
                 .into(holder.thumbnailView);
         }

@@ -4,7 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by khannan on 2/25/16.
+ * Class to hold an individual article. Instantiated through the
+ * Articles API.
  */
 public class Article {
 

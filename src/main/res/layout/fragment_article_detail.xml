@@ -8,6 +8,7 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="256dp"
+        android:elevation="4dp"
         android:background="?colorPrimary"
         android:fitsSystemWindows="true">
 

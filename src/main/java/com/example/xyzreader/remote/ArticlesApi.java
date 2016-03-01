@@ -7,7 +7,7 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 
 /**
- * Created by khannan on 2/25/16.
+ * An API using Retrofit to get the Articles
  */
 public interface ArticlesApi {
 
