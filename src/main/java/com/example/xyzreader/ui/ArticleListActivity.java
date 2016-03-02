@@ -169,8 +169,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 
             Picasso.with(mContext)
                 .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
-                    .resize(200, 200)
-                .centerCrop()
+                 //   .resize(200, 200)
+                //.centerCrop()
+                    .fit()
                 .into(holder.thumbnailView);
         }
 
